@@ -19,7 +19,7 @@ void	init_philo(t_data *game)
 	int	i;
 
 	i = 0;
-	while (i > game->nb_philo)
+	while (i < game->nb_philo)
 	{
 		game->philo[i].id = i;
 		game->philo[i].x_ate = 0;
@@ -30,6 +30,7 @@ void	init_philo(t_data *game)
 			game->philo[i].right_fork_id = i + 1;
 		game->philo[i].time_last_eat = 0;
 		game->philo[i].game = game;
+		i++;
 	}
 }
 

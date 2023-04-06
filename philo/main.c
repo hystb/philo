@@ -18,12 +18,12 @@ int	main(int argc, char **argv)
 		error_message(init);
 		return (1);
 	}
-	/*if (game(&game_rules))
+	if (game(&game_rules))
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(THREADS_ERROR, 2);
 		ft_putstr_fd("\n", 2);
 		return (1);
-	}*/
+	}
 	return (0);
 }

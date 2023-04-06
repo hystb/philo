@@ -47,6 +47,7 @@ int		ft_isdigit(int c);
 int		ft_atoi(const char *str, int i);
 void	error_message(int nb_error);
 void	ft_putstr_fd(char *str, int fd);
-
+int		game(t_data *rules);
+void	*start_actions(void *philo);
 
 #endif
