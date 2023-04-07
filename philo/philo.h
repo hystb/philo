@@ -12,6 +12,7 @@
 # define MUTEX_ERROR "Mutex not correctly initatized"
 # define AMOUNT_ARG_ERROR "Program take only 4 or 5 arguments"
 # define THREADS_ERROR "Error during thread creation"
+# define ALLOC_ERROR "Memory allocation failed"
 # define THINK "is thinking"
 # define EAT "is eating"
 # define FORK "has taken a fork"
@@ -21,7 +22,7 @@
 typedef struct s_philo
 {
 	int				id;
-	int				x_ate;
+	int				time_have_eat;
 	int				left_fork_id;
 	int				right_fork_id;
 	long			time_last_eat;
@@ -46,8 +47,8 @@ typedef struct s_data
 }					t_data;
 
 int		init_mutex(t_data *game);
-void	init_philo(t_data *game);
-int		init_game(char **argv, t_data *game);
+int		init_philo(t_data *game);
+int		init_game(char **argv, t_data *game, int error);
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str, int i);
 void	error_message(int nb_error);
@@ -59,5 +60,7 @@ void	print_philo(int id, char *action, t_data *data, int type);
 void	make_wait(long time, t_data *game);
 int		died(t_data *game);
 void	control_death(t_data *game, int i);
+int		error_alloc(t_data *game, int error, int i);
+int		error_mutex(t_data *game, int error, int i);
 
 #endif
