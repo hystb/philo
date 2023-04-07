@@ -12,16 +12,22 @@
 # define MUTEX_ERROR "Mutex not correctly initatized"
 # define AMOUNT_ARG_ERROR "Program take only 4 or 5 arguments"
 # define THREADS_ERROR "Error during thread creation"
+# define THINK "is thinking"
+# define EAT "is eating"
+# define FORK "has taken a fork"
+# define DIE "died"
+# define SLEEP " is sleeping"
 
 typedef struct s_philo
 {
-	int					id;
-	int					x_ate;
-	int					left_fork_id;
-	int					right_fork_id;
-	long long			time_last_eat;
-	struct s_data		*game;
-	pthread_t			thread_id;
+	int				id;
+	int				x_ate;
+	int				left_fork_id;
+	int				right_fork_id;
+	long			time_last_eat;
+	struct s_data	*game;
+	pthread_t		th_id;
+	pthread_mutex_t	meal_check;
 }						t_philo;
 
 typedef struct s_data
@@ -31,13 +37,12 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_time_eat;
-	int				all_ate;
-	long long		first_timestamp;
-	pthread_mutex_t	meal_check;
-	pthread_mutex_t	forks[250];
+	int				death;
+	long			first_time;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	writing;
-	int				died;
-	t_philo			philo[250];
+	pthread_mutex_t	died;
+	t_philo			*philo;
 }					t_data;
 
 int		init_mutex(t_data *game);
@@ -49,5 +54,10 @@ void	error_message(int nb_error);
 void	ft_putstr_fd(char *str, int fd);
 int		game(t_data *rules);
 void	*start_actions(void *philo);
+long	get_time(void);
+void	print_philo(int id, char *action, t_data *data, int type);
+void	make_wait(long time, t_data *game);
+int		died(t_data *game);
+void	control_death(t_data *game, int i);
 
 #endif
