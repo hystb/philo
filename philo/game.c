@@ -89,7 +89,7 @@ int	game(t_data *game, int i, t_philo *philo)
 {
 	philo = game->philo;
 	game->first_time = (get_time());
-	while (i < game->nb_philo)
+	while (++i < game->nb_philo)
 	{
 		if (pthread_create(&(philo[i].th_id), NULL, start_actions, &philo[i]))
 		{
@@ -98,19 +98,17 @@ int	game(t_data *game, int i, t_philo *philo)
 			return (1);
 		}
 		make_wait(2);
-		i++;
 	}
-	i = 0;
+	i = -1;
 	control_death(game, 0);
-	while (i < game->nb_philo)
+	while (++i < game->nb_philo)
 	{
 		pthread_mutex_lock(&game->philo[i].meal_check);
 		game->philo[i].death = 1;
 		pthread_mutex_unlock(&game->philo[i].meal_check);
-		i++;
 	}
-	i = 0;
-	while (i++ < game->nb_philo)
-		pthread_join(philo[i - 1].th_id, NULL);
+	i = -1;
+	while (++i < game->nb_philo)
+		pthread_join(philo[i].th_id, NULL);
 	return (0);
 }

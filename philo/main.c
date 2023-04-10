@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 		error_message(init);
 		return (1);
 	}
-	if (game(&game_rules, 0, NULL))
+	if (game(&game_rules, -1, NULL))
 	{
 		print_fd("Error: ", THREADS_ERROR, "\n");
 		clear_data(game_rules, 0);

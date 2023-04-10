@@ -48,8 +48,11 @@ int	death_checker(int i, long time, t_data *game)
 
 void	control_death(t_data *game, int i)
 {
+	int	nb_eat_succes;
+
 	while (1)
 	{
+		nb_eat_succes = game->nb_time_eat == 0;
 		lock_philo(game, 0);
 		i = 0;
 		while (i < game->nb_philo)
@@ -59,8 +62,13 @@ void	control_death(t_data *game, int i)
 				unlock_philo(game, 0);
 				return ;
 			}
+			if (game->nb_time_eat == -1
+				|| game->philo[i].time_have_eat < game->nb_time_eat)
+				nb_eat_succes++;
 			i++;
 		}
 		unlock_philo(game, 0);
+		if (nb_eat_succes == 0)
+			return ;
 	}
 }
