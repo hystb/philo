@@ -1,7 +1,7 @@
 #---------------------------------------------------#
 CC 			= cc
 
-CFLAGS 		= -Wall -Wextra -Werror #-fsanitize=thread -g3
+CFLAGS 		= -Wall -Wextra -Werror -fsanitize=thread -g3
 NAME 		= philo
 #---------------------------------------------------#
 OBJ_DIR 	= obj/
