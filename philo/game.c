@@ -1,14 +1,17 @@
 #include "philo.h"
 
-int	died(t_data *game)
+int	died(t_philo *philo, int mutex)
 {
-	pthread_mutex_lock(&game->died);
-	if (game->death)
+	if (!mutex)
+		pthread_mutex_lock(&philo->meal_check);
+	if (philo->death)
 	{
-		pthread_mutex_unlock(&game->died);
+		if (!mutex)
+			pthread_mutex_unlock(&philo->meal_check);
 		return (0);
 	}
-	pthread_mutex_unlock(&game->died);
+	if (!mutex)
+		pthread_mutex_unlock(&philo->meal_check);
 	return (1);
 }
 
@@ -24,15 +27,20 @@ int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 {
 	print_philo(phi->id, THINK, phi->game, 0);
 	pthread_mutex_lock(fork[0]);
+	if (!died(phi, 0))
+		return (pthread_mutex_unlock(fork[0]), 1);
 	print_philo(phi->id, FORK, phi->game, 0);
 	pthread_mutex_lock(fork[1]);
 	print_philo(phi->id, FORK, phi->game, 0);
-	pthread_mutex_lock(&phi->meal_check);
+	if (!died(phi, 0))
+	{
+		pthread_mutex_unlock(fork[0]);
+		return (pthread_mutex_unlock(fork[1]), 1);
+	}
 	print_philo(phi->id, EAT, phi->game, 0);
 	phi->time_last_eat = get_time();
-	pthread_mutex_unlock(&phi->meal_check);
 	count_eating(phi);
-	make_wait(game->time_to_eat, game);
+	make_wait(game->time_to_eat);
 	pthread_mutex_unlock(fork[0]);
 	pthread_mutex_unlock(fork[1]);
 	return (1);
@@ -46,33 +54,28 @@ void	*start_actions(void *philo)
 
 	phi = philo;
 	game = phi->game;
+	fork[0] = &game->forks[phi->left_fork_id];
+	fork[1] = &game->forks[phi->right_fork_id];
 	if (phi->id % 2)
 	{
 		fork[0] = &game->forks[phi->right_fork_id];
 		fork[1] = &game->forks[phi->left_fork_id];
 	}
-	else
-	{
-		fork[0] = &game->forks[phi->left_fork_id];
-		fork[1] = &game->forks[phi->right_fork_id];
-	}
-	while (died(game) && (phi->time_have_eat < game->nb_time_eat
+	while (died(phi, 0) && (phi->time_have_eat < game->nb_time_eat
 			|| game->nb_time_eat == -1))
 	{
 		philo_eat(philo, fork, game);
 		if (phi->time_have_eat < game->nb_time_eat || game->nb_time_eat == -1)
+		{
 			print_philo(phi->id, SLEEP, phi->game, 0);
-		make_wait(500, game);
+			make_wait(game->time_to_sleep);
+		}
 	}
 	return (NULL);
 }
 
-int	game(t_data *game)
+int	game(t_data *game, int i, t_philo *philo)
 {
-	int		i;
-	t_philo	*philo;
-
-	i = 0;
 	philo = game->philo;
 	game->first_time = (get_time());
 	while (i < game->nb_philo)
@@ -89,8 +92,13 @@ int	game(t_data *game)
 	control_death(game, 0);
 	while (i < game->nb_philo)
 	{
-		pthread_join(philo[i].th_id, NULL);
+		pthread_mutex_lock(&game->philo[i].meal_check);
+		game->philo[i].death = 1;
+		pthread_mutex_unlock(&game->philo[i].meal_check);
 		i++;
 	}
+	i = 0;
+	while (i++ < game->nb_philo)
+		pthread_join(philo[i - 1].th_id, NULL);
 	return (0);
 }

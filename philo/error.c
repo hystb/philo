@@ -17,7 +17,6 @@ int	error_alloc(t_data *game, int error, int i)
 			pthread_mutex_destroy(&game->forks[i++]);
 		free(game->forks);
 		pthread_mutex_destroy(&game->writing);
-		pthread_mutex_destroy(&game->died);
 		if (error == 5)
 			return (3);
 		free (game->philo);

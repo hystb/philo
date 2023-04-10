@@ -46,21 +46,29 @@ long	get_time(void)
 
 void	print_philo(int id, char *action, t_data *game, int type)
 {
-	if (died(game) || type == 1)
+	if (type == 1)
 	{
 		pthread_mutex_lock(&game->writing);
 		printf("%ld", get_time() - game->first_time);
 		printf(" %d %s\n", id + 1, action);
 		pthread_mutex_unlock(&game->writing);
 	}
+	else if (died(&game->philo[id], type))
+	{
+		pthread_mutex_lock(&game->writing);
+		printf("%ld", get_time() - game->first_time);
+		printf(" %d %s\n", id + 1, action);
+		pthread_mutex_unlock(&game->writing);
+	}
+
 }
 
-void	make_wait(long time, t_data *game)
+void	make_wait(long time)
 {
 	long	actual;
 
 	actual = get_time();
-	while (died(game))
+	while (1)
 	{
 		if (get_time() - actual >= time)
 			break ;

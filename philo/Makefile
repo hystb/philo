@@ -28,7 +28,7 @@ all:
 	$(MAKE) $(NAME)
 
 $(NAME): $(OBJS) $(INCLUDES) $(LIBFT_EXEC)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -I $(INCLUDES)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) 
 
 $(OBJ_DIR)/%.o : %.c Makefile $(HEADERS)
 	@mkdir -p $(@D)

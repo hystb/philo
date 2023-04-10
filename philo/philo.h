@@ -26,6 +26,7 @@ typedef struct s_philo
 	int				left_fork_id;
 	int				right_fork_id;
 	long			time_last_eat;
+	int				death;
 	struct s_data	*game;
 	pthread_t		th_id;
 	pthread_mutex_t	meal_check;
@@ -38,11 +39,9 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_time_eat;
-	int				death;
 	long			first_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	writing;
-	pthread_mutex_t	died;
 	t_philo			*philo;
 }					t_data;
 
@@ -53,12 +52,12 @@ int		ft_isdigit(int c);
 int		ft_atoi(const char *str, int i);
 void	error_message(int nb_error);
 void	ft_putstr_fd(char *str, int fd);
-int		game(t_data *rules);
+int		game(t_data *game, int i, t_philo *philo);
 void	*start_actions(void *philo);
 long	get_time(void);
 void	print_philo(int id, char *action, t_data *data, int type);
-void	make_wait(long time, t_data *game);
-int		died(t_data *game);
+void	make_wait(long time);
+int		died(t_philo *philo, int mutex);
 void	control_death(t_data *game, int i);
 int		error_alloc(t_data *game, int error, int i);
 int		error_mutex(t_data *game, int error, int i);

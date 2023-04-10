@@ -8,7 +8,6 @@ static void	clear_data(t_data game, int i)
 		pthread_mutex_destroy(&game.forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&game.died);
 	pthread_mutex_destroy(&game.writing);
 	free(game.philo);
 	free(game.forks);
@@ -37,7 +36,7 @@ int	main(int argc, char **argv)
 		error_message(init);
 		return (1);
 	}
-	if (game(&game_rules))
+	if (game(&game_rules, 0, NULL))
 	{
 		print_fd("Error: ", THREADS_ERROR, "\n");
 		clear_data(game_rules, 0);

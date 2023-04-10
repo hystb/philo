@@ -27,19 +27,13 @@ int	death_checker(t_philo philo, long time, t_data *game)
 	should_dead = philo.time_last_eat + game->time_to_die + game->first_time;
 	if (should_dead <= time)
 	{
-		pthread_mutex_lock(&game->died);
-		game->death = 1;
-		pthread_mutex_unlock(&game->died);
 		print_philo(philo.id, DIE, game, 1);
 		return (1);
 	}
-	pthread_mutex_lock(&game->died);
 	if (game->nb_time_eat != -1 && philo.time_have_eat >= game->nb_time_eat)
 	{
-		pthread_mutex_unlock(&game->died);
 		return (1);
 	}
-	pthread_mutex_unlock(&game->died);
 	return (0);
 }
 
@@ -47,6 +41,7 @@ void	control_death(t_data *game, int i)
 {
 	while (1)
 	{
+		make_wait(1);
 		lock_philo(game, 0);
 		i = 0;
 		while (i < game->nb_philo)

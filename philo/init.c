@@ -16,8 +16,6 @@ int	init_mutex(t_data *game)
 	}
 	if (pthread_mutex_init(&(game->writing), NULL))
 		return (3);
-	if (pthread_mutex_init(&(game->died), NULL))
-		return (4);
 	return (0);
 }
 
@@ -54,7 +52,6 @@ int	init_game(char **argv, t_data *game, int error)
 	game->time_to_die = ft_atoi(argv[2], 0);
 	game->time_to_eat = ft_atoi(argv[3], 0);
 	game->time_to_sleep = ft_atoi(argv[4], 0);
-	game->death = 0;
 	if (argv[5])
 	{
 		game->nb_time_eat = ft_atoi(argv[5], 0);
