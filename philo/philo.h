@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/10 12:14:41 by nmilan            #+#    #+#             */
+/*   Updated: 2023/04/10 15:46:33 by nmilan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -17,7 +29,7 @@
 # define EAT "is eating"
 # define FORK "has taken a fork"
 # define DIE "died"
-# define SLEEP " is sleeping"
+# define SLEEP "is sleeping"
 
 typedef struct s_philo
 {
@@ -57,7 +69,7 @@ void	*start_actions(void *philo);
 long	get_time(void);
 void	print_philo(int id, char *action, t_data *data, int type);
 void	make_wait(long time);
-int		died(t_philo *philo, int mutex);
+int		died(t_philo *philo);
 void	control_death(t_data *game, int i);
 int		error_alloc(t_data *game, int error, int i);
 int		error_mutex(t_data *game, int error, int i);

@@ -1,17 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/10 12:13:44 by nmilan            #+#    #+#             */
+/*   Updated: 2023/04/10 16:46:13 by nmilan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-int	died(t_philo *philo, int mutex)
+int	died(t_philo *philo)
 {
-	if (!mutex)
-		pthread_mutex_lock(&philo->meal_check);
+	pthread_mutex_lock(&philo->meal_check);
 	if (philo->death)
 	{
-		if (!mutex)
-			pthread_mutex_unlock(&philo->meal_check);
+		pthread_mutex_unlock(&philo->meal_check);
 		return (0);
 	}
-	if (!mutex)
-		pthread_mutex_unlock(&philo->meal_check);
+	pthread_mutex_unlock(&philo->meal_check);
 	return (1);
 }
 
@@ -27,18 +36,20 @@ int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 {
 	print_philo(phi->id, THINK, phi->game, 0);
 	pthread_mutex_lock(fork[0]);
-	if (!died(phi, 0))
+	if (!died(phi))
 		return (pthread_mutex_unlock(fork[0]), 1);
 	print_philo(phi->id, FORK, phi->game, 0);
 	pthread_mutex_lock(fork[1]);
 	print_philo(phi->id, FORK, phi->game, 0);
-	if (!died(phi, 0))
+	if (!died(phi))
 	{
 		pthread_mutex_unlock(fork[0]);
 		return (pthread_mutex_unlock(fork[1]), 1);
 	}
 	print_philo(phi->id, EAT, phi->game, 0);
+	pthread_mutex_lock(&phi->meal_check);
 	phi->time_last_eat = get_time();
+	pthread_mutex_unlock(&phi->meal_check);
 	count_eating(phi);
 	make_wait(game->time_to_eat);
 	pthread_mutex_unlock(fork[0]);
@@ -61,7 +72,7 @@ void	*start_actions(void *philo)
 		fork[0] = &game->forks[phi->right_fork_id];
 		fork[1] = &game->forks[phi->left_fork_id];
 	}
-	while (died(phi, 0) && (phi->time_have_eat < game->nb_time_eat
+	while (died(phi) && (phi->time_have_eat < game->nb_time_eat
 			|| game->nb_time_eat == -1))
 	{
 		philo_eat(philo, fork, game);
@@ -86,6 +97,7 @@ int	game(t_data *game, int i, t_philo *philo)
 				pthread_join(philo[--i].th_id, NULL);
 			return (1);
 		}
+		make_wait(2);
 		i++;
 	}
 	i = 0;

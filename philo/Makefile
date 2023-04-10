@@ -1,7 +1,7 @@
 #---------------------------------------------------#
 CC 			= cc
 
-CFLAGS 		= -Wall -Wextra -Werror #-fsanitize=thread -g3
+CFLAGS 		= -Wall -Wextra -Werror -g3 #-fsanitize=thread
 NAME 		= philo
 #---------------------------------------------------#
 OBJ_DIR 	= obj/
@@ -28,7 +28,7 @@ all:
 	$(MAKE) $(NAME)
 
 $(NAME): $(OBJS) $(INCLUDES) $(LIBFT_EXEC)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread
 
 $(OBJ_DIR)/%.o : %.c Makefile $(HEADERS)
 	@mkdir -p $(@D)

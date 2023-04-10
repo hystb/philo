@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/10 12:13:52 by nmilan            #+#    #+#             */
+/*   Updated: 2023/04/10 15:00:54 by nmilan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	init_mutex(t_data *game)
@@ -41,6 +53,7 @@ int	init_philo(t_data *game)
 			return (6);
 		game->philo[i].game = game;
 		game->philo[i].time_last_eat = 0;
+		game->philo[i].death = 0;
 		i++;
 	}
 	return (0);

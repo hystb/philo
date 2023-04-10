@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/10 12:14:14 by nmilan            #+#    #+#             */
+/*   Updated: 2023/04/10 13:41:49 by nmilan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_isdigit(int c)
@@ -53,14 +65,13 @@ void	print_philo(int id, char *action, t_data *game, int type)
 		printf(" %d %s\n", id + 1, action);
 		pthread_mutex_unlock(&game->writing);
 	}
-	else if (died(&game->philo[id], type))
+	else if (died(&game->philo[id]))
 	{
 		pthread_mutex_lock(&game->writing);
 		printf("%ld", get_time() - game->first_time);
 		printf(" %d %s\n", id + 1, action);
 		pthread_mutex_unlock(&game->writing);
 	}
-
 }
 
 void	make_wait(long time)
