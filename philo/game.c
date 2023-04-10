@@ -39,21 +39,24 @@ int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 	if (!died(phi))
 		return (pthread_mutex_unlock(fork[0]), 1);
 	print_philo(phi->id, FORK, phi->game, 0);
-	pthread_mutex_lock(fork[1]);
-	print_philo(phi->id, FORK, phi->game, 0);
-	if (!died(phi))
-	{
-		pthread_mutex_unlock(fork[0]);
-		return (pthread_mutex_unlock(fork[1]), 1);
+	if (game->nb_philo != 1)
+	{	
+		pthread_mutex_lock(fork[1]);
+		print_philo(phi->id, FORK, phi->game, 0);
+		if (!died(phi))
+		{
+			pthread_mutex_unlock(fork[0]);
+			return (pthread_mutex_unlock(fork[1]), 1);
+		}
+		print_philo(phi->id, EAT, phi->game, 0);
+		pthread_mutex_lock(&phi->meal_check);
+		phi->time_last_eat = get_time();
+		pthread_mutex_unlock(&phi->meal_check);
+		count_eating(phi);
+		make_wait(game->time_to_eat);
+		pthread_mutex_unlock(fork[1]);
 	}
-	print_philo(phi->id, EAT, phi->game, 0);
-	pthread_mutex_lock(&phi->meal_check);
-	phi->time_last_eat = get_time();
-	pthread_mutex_unlock(&phi->meal_check);
-	count_eating(phi);
-	make_wait(game->time_to_eat);
 	pthread_mutex_unlock(fork[0]);
-	pthread_mutex_unlock(fork[1]);
 	return (1);
 }
 
@@ -76,11 +79,10 @@ void	*start_actions(void *philo)
 			|| game->nb_time_eat == -1))
 	{
 		philo_eat(philo, fork, game);
-		if (phi->time_have_eat < game->nb_time_eat || game->nb_time_eat == -1)
-		{
-			print_philo(phi->id, SLEEP, phi->game, 0);
-			make_wait(game->time_to_sleep);
-		}
+		if (game->nb_philo == 1)
+			return (NULL);
+		if ((phi->time_have_eat < game->nb_time_eat || game->nb_time_eat == -1))
+			print_philo(phi->id, SLEEP, phi->game, 2);
 	}
 	return (NULL);
 }

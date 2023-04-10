@@ -71,6 +71,8 @@ void	print_philo(int id, char *action, t_data *game, int type)
 		printf("%ld", get_time() - game->first_time);
 		printf(" %d %s\n", id + 1, action);
 		pthread_mutex_unlock(&game->writing);
+		if (type == 2)
+			make_wait(game->time_to_sleep);
 	}
 }
 

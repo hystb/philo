@@ -73,7 +73,7 @@ int	init_game(char **argv, t_data *game, int error)
 	}
 	else
 		game->nb_time_eat = -1;
-	if (game->nb_philo < 2 || game->time_to_die < 0 || game->time_to_eat < 0
+	if (game->nb_philo < 1 || game->time_to_die < 0 || game->time_to_eat < 0
 		|| game->time_to_sleep < 0 || game->nb_philo > 250)
 		return (1);
 	error = init_mutex(game);
