@@ -30,7 +30,7 @@ all:
 $(NAME): $(OBJS) $(INCLUDES) $(LIBFT_EXEC)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lpthread
 
-$(OBJ_DIR)/%.o : %.c Makefile $(HEADERS)
+$(OBJ_DIR)/%.o : %.c $(HEADERS)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
