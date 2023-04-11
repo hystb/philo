@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:44 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/10 16:46:13 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/11 13:14:03 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 		}
 		print_philo(phi->id, EAT, phi->game, 0);
 		pthread_mutex_lock(&phi->meal_check);
-		phi->time_last_eat = get_time();
+		phi->time_last_eat = get_time() - game->first_time;
 		pthread_mutex_unlock(&phi->meal_check);
 		count_eating(phi);
 		make_wait(game->time_to_eat);
@@ -68,6 +68,8 @@ void	*start_actions(void *philo)
 
 	phi = philo;
 	game = phi->game;
+	pthread_mutex_lock(&phi->meal_check);
+	pthread_mutex_unlock(&phi->meal_check);
 	fork[0] = &game->forks[phi->left_fork_id];
 	fork[1] = &game->forks[phi->right_fork_id];
 	if (phi->id % 2)
@@ -101,14 +103,7 @@ int	game(t_data *game, int i, t_philo *philo)
 		}
 		make_wait(2);
 	}
-	i = -1;
 	control_death(game, 0);
-	while (++i < game->nb_philo)
-	{
-		pthread_mutex_lock(&game->philo[i].meal_check);
-		game->philo[i].death = 1;
-		pthread_mutex_unlock(&game->philo[i].meal_check);
-	}
 	i = -1;
 	while (++i < game->nb_philo)
 		pthread_join(philo[i].th_id, NULL);

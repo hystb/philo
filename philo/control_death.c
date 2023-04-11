@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:22 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/10 16:57:07 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/11 13:13:54 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@ void	unlock_philo(t_data *game, int i)
 
 int	death_checker(int i, long time, t_data *game)
 {
-	long	should_dead;
+	long long	should_dead;
+	int			j;
 
+	j = -1;
 	should_dead = game->philo[i].time_last_eat + \
 	game->time_to_die + game->first_time;
 	if (should_dead <= time)
 	{
+		while (++j < game->nb_philo)
+			game->philo[j].death = 1;
 		print_philo(game->philo[i].id, DIE, game, 1);
 		return (1);
 	}
