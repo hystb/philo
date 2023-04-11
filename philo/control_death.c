@@ -44,6 +44,7 @@ int	death_checker(int i, long time, t_data *game)
 	{
 		while (++j < game->nb_philo)
 			game->philo[j].death = 1;
+		usleep(600);
 		print_philo(game->philo[i].id, DIE, game, 1);
 		return (1);
 	}

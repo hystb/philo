@@ -59,8 +59,36 @@ int	init_philo(t_data *game)
 	return (0);
 }
 
+long	ft_strlen(const char *s)
+{
+	long	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+int	control_max(char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (argv[i] && i < 6)
+	{
+		if (ft_strlen(argv[i]) > 12 || ft_atoi(argv[i], 0) > INT_MAX)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	init_game(char **argv, t_data *game, int error)
 {
+	if (control_max(argv))
+		return (1);
 	game->nb_philo = ft_atoi(argv[1], 0);
 	game->time_to_die = ft_atoi(argv[2], 0);
 	game->time_to_eat = ft_atoi(argv[3], 0);
@@ -74,7 +102,7 @@ int	init_game(char **argv, t_data *game, int error)
 	else
 		game->nb_time_eat = -1;
 	if (game->nb_philo < 1 || game->time_to_die < 0 || game->time_to_eat < 0
-		|| game->time_to_sleep < 0 || game->nb_philo > 250)
+		|| game->time_to_sleep < 0)
 		return (1);
 	error = init_mutex(game);
 	if (error)

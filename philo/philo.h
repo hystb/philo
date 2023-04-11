@@ -30,6 +30,7 @@
 # define FORK "has taken a fork"
 # define DIE "died"
 # define SLEEP "is sleeping"
+# define INT_MAX 2147483647
 
 typedef struct s_philo
 {
@@ -61,14 +62,14 @@ int		init_mutex(t_data *game);
 int		init_philo(t_data *game);
 int		init_game(char **argv, t_data *game, int error);
 int		ft_isdigit(int c);
-int		ft_atoi(const char *str, int i);
+long	ft_atoi(const char *str, int i);
 void	error_message(int nb_error);
 void	ft_putstr_fd(char *str, int fd);
 int		game(t_data *game, int i, t_philo *philo);
 void	*start_actions(void *philo);
 long	get_time(void);
 void	print_philo(int id, char *action, t_data *data, int type);
-void	make_wait(long time);
+void	make_wait(long time, t_philo *philo);
 int		died(t_philo *philo);
 void	control_death(t_data *game, int i);
 int		error_alloc(t_data *game, int error, int i);

@@ -53,7 +53,7 @@ int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 		phi->time_last_eat = get_time() - game->first_time;
 		pthread_mutex_unlock(&phi->meal_check);
 		count_eating(phi);
-		make_wait(game->time_to_eat);
+		make_wait(game->time_to_eat, phi);
 		pthread_mutex_unlock(fork[1]);
 	}
 	pthread_mutex_unlock(fork[0]);
@@ -68,14 +68,13 @@ void	*start_actions(void *philo)
 
 	phi = philo;
 	game = phi->game;
-	pthread_mutex_lock(&phi->meal_check);
-	pthread_mutex_unlock(&phi->meal_check);
 	fork[0] = &game->forks[phi->left_fork_id];
 	fork[1] = &game->forks[phi->right_fork_id];
 	if (phi->id % 2)
 	{
 		fork[0] = &game->forks[phi->right_fork_id];
 		fork[1] = &game->forks[phi->left_fork_id];
+		usleep(1500);
 	}
 	while (died(phi) && (phi->time_have_eat < game->nb_time_eat
 			|| game->nb_time_eat == -1))
@@ -101,7 +100,6 @@ int	game(t_data *game, int i, t_philo *philo)
 				pthread_join(philo[--i].th_id, NULL);
 			return (1);
 		}
-		make_wait(2);
 	}
 	control_death(game, 0);
 	i = -1;

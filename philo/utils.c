@@ -19,7 +19,7 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int	ft_atoi(const char *str, int i)
+long	ft_atoi(const char *str, int i)
 {
 	long	res;
 	int		sign;
@@ -72,16 +72,16 @@ void	print_philo(int id, char *action, t_data *game, int type)
 		printf(" %d %s\n", id + 1, action);
 		pthread_mutex_unlock(&game->writing);
 		if (type == 2)
-			make_wait(game->time_to_sleep);
+			make_wait(game->time_to_sleep, &game->philo[id]);
 	}
 }
 
-void	make_wait(long time)
+void	make_wait(long time, t_philo *philo)
 {
 	long	actual;
 
 	actual = get_time();
-	while (1)
+	while (died(philo))
 	{
 		if (get_time() - actual >= time)
 			break ;
