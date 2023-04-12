@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:41 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/11 12:47:50 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/12 17:53:36 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ int		died(t_philo *philo);
 void	control_death(t_data *game, int i);
 int		error_alloc(t_data *game, int error, int i);
 int		error_mutex(t_data *game, int error, int i);
+void	swap_fork(t_philo *philo);
 
 #endif

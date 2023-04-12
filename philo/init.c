@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:52 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/12 14:32:20 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/12 17:52:25 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	init_philo(t_data *game)
 			game->philo[i].right_fork_id = 0;
 		else
 			game->philo[i].right_fork_id = i + 1;
+		swap_fork(&game->philo[i]);
 		game->philo[i].time_last_eat = 0;
 		if (pthread_mutex_init(&game->philo[i].meal_check, NULL))
 			return (6);

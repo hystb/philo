@@ -12,7 +12,8 @@ error.c\
 game.c\
 init.c\
 utils.c\
-control_death.c
+control_death.c\
+swap_fork.c
 
 
 OBJ_DIR 	= .obj

@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:14 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/12 15:00:50 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/12 17:26:41 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	make_wait(long time, t_philo *philo)
 	long	actual;
 
 	actual = get_time();
+	if (time <= 0)
+		return ;
 	while (died(philo))
 	{
 		if (get_time() - actual > time)
