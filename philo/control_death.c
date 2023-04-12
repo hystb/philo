@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:22 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/11 13:13:54 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/12 14:13:26 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	death_checker(int i, long time, t_data *game)
 	{
 		while (++j < game->nb_philo)
 			game->philo[j].death = 1;
-		usleep(600);
+		usleep(100);
 		print_philo(game->philo[i].id, DIE, game, 1);
 		return (1);
 	}
@@ -57,6 +57,7 @@ void	control_death(t_data *game, int i)
 
 	while (1)
 	{
+		usleep(100);
 		nb_eat_succes = game->nb_time_eat == 0;
 		lock_philo(game, 0);
 		i = 0;

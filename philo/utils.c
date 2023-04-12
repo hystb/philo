@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:14 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/11 12:47:30 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/12 15:00:50 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,13 @@ void	print_philo(int id, char *action, t_data *game, int type)
 	if (type == 1)
 	{
 		pthread_mutex_lock(&game->writing);
-		printf("%ld", get_time() - game->first_time);
-		printf(" %d %s\n", id + 1, action);
+		printf("%ld %d %s\n", get_time() - game->first_time, id + 1, action);
 		pthread_mutex_unlock(&game->writing);
 	}
 	else if (died(&game->philo[id]))
 	{
 		pthread_mutex_lock(&game->writing);
-		printf("%ld", get_time() - game->first_time);
-		printf(" %d %s\n", id + 1, action);
+		printf("%ld %d %s\n", get_time() - game->first_time, id + 1, action);
 		pthread_mutex_unlock(&game->writing);
 		if (type == 2)
 			make_wait(game->time_to_sleep, &game->philo[id]);
@@ -83,7 +81,7 @@ void	make_wait(long time, t_philo *philo)
 	actual = get_time();
 	while (died(philo))
 	{
-		if (get_time() - actual >= time)
+		if (get_time() - actual > time)
 			break ;
 		usleep(50);
 	}

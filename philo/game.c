@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:44 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/11 13:14:03 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/12 15:09:21 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	count_eating(t_philo *philo)
 int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 {
 	print_philo(phi->id, THINK, phi->game, 0);
+	make_wait(1, phi);
 	pthread_mutex_lock(fork[0]);
 	if (!died(phi))
 		return (pthread_mutex_unlock(fork[0]), 1);
@@ -70,11 +71,10 @@ void	*start_actions(void *philo)
 	game = phi->game;
 	fork[0] = &game->forks[phi->left_fork_id];
 	fork[1] = &game->forks[phi->right_fork_id];
-	if (phi->id % 2)
+	if (phi->id % 2 == 0)
 	{
 		fork[0] = &game->forks[phi->right_fork_id];
 		fork[1] = &game->forks[phi->left_fork_id];
-		usleep(1500);
 	}
 	while (died(phi) && (phi->time_have_eat < game->nb_time_eat
 			|| game->nb_time_eat == -1))
