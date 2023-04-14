@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:31 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/10 12:13:34 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/14 12:40:45 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ void	error_message(int nb_error)
 	}
 }
 
-void	ft_putstr_fd(char *str, int fd)
+int	ft_putstr_fd(char *str, int fd)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 		i++;
-	write(fd, str, i);
+	return (write(fd, str, i));
 }

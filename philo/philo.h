@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:41 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/14 11:16:11 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/14 12:40:05 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_data
 	int				nb_time_eat;
 	long			first_time;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*waiting_list;
 	pthread_mutex_t	writing;
 	t_philo			*philo;
 }					t_data;
@@ -64,7 +65,7 @@ int		init_game(char **argv, t_data *game, int error);
 int		ft_isdigit(int c);
 long	ft_atoi(const char *str, int i);
 void	error_message(int nb_error);
-void	ft_putstr_fd(char *str, int fd);
+int		ft_putstr_fd(char *str, int fd);
 int		game(t_data *game, int i, t_philo *philo);
 void	*start_actions(void *philo);
 long	get_time(void);
