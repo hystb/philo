@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:44 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/12 18:01:25 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/13 14:53:22 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	died(t_philo *philo)
 
 void	count_eating(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->meal_check);
 	if (philo->time_have_eat != -1)
 		philo->time_have_eat++;
 	pthread_mutex_unlock(&philo->meal_check);
@@ -34,7 +33,7 @@ void	count_eating(t_philo *philo)
 
 int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 {
-	usleep(500);
+	//usleep(600);
 	pthread_mutex_lock(fork[0]);
 	print_philo(phi->id, FORK, phi->game, 0);
 	if (game->nb_philo != 1)
@@ -49,7 +48,6 @@ int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game)
 		print_philo(phi->id, EAT, phi->game, 0);
 		pthread_mutex_lock(&phi->meal_check);
 		phi->time_last_eat = get_time() - game->first_time;
-		pthread_mutex_unlock(&phi->meal_check);
 		count_eating(phi);
 		make_wait(game->time_to_eat, phi);
 		pthread_mutex_unlock(fork[1]);
@@ -70,7 +68,7 @@ void	*start_actions(void *philo)
 	fork[1] = &game->forks[phi->right_fork_id];
 	print_philo(phi->id, THINK, phi->game, 0);
 	if (phi->id % 2 == 1)
-		make_wait(game->time_to_eat - 10, phi);
+		make_wait(game->time_to_eat, phi);
 	while (died(phi) && (phi->time_have_eat < game->nb_time_eat
 			|| game->nb_time_eat == -1))
 	{

@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:14 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/12 17:26:41 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/13 12:35:26 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	make_wait(long time, t_philo *philo)
 	while (died(philo))
 	{
 		if (get_time() - actual > time)
-			break ;
-		usleep(50);
+			return ;
+		usleep(100);
 	}
 }
