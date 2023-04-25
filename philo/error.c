@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:31 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/14 12:40:45 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/24 15:08:35 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ int	error_alloc(t_data *game, int error, int i)
 {
 	if (error == 1)
 		return (3);
+	if (error == 7)
+		return (free(game->forks), 3);
 	if (error == 2)
 	{
 		free(game->forks);
+		free(game->is_used);
 		return (2);
 	}
 	if (error == 3 || error == 4)
@@ -28,6 +31,7 @@ int	error_alloc(t_data *game, int error, int i)
 		while (i < game->nb_philo)
 			pthread_mutex_destroy(&game->forks[i++]);
 		free(game->forks);
+		free(game->is_used);
 		pthread_mutex_destroy(&game->writing);
 		if (error == 5)
 			return (3);
@@ -42,6 +46,7 @@ int	error_mutex(t_data *game, int error, int i)
 	while (i < game->nb_philo)
 		pthread_mutex_destroy(&game->forks[i++]);
 	free(game->forks);
+	free(game->is_used);
 	if (error == 4)
 		pthread_mutex_destroy(&game->writing);
 	return (1);

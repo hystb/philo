@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:14 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/13 12:35:26 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/24 13:39:11 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,14 @@ void	print_philo(int id, char *action, t_data *game, int type)
 void	make_wait(long time, t_philo *philo)
 {
 	long	actual;
+	long	wait;
+	int		first;
 
+	first = 0;
+	if (time < 2000)
+		wait = time * 0.9;
+	else
+		wait = 1900;
 	actual = get_time();
 	if (time <= 0)
 		return ;
@@ -85,6 +92,12 @@ void	make_wait(long time, t_philo *philo)
 	{
 		if (get_time() - actual > time)
 			return ;
-		usleep(100);
+		if (first == 0)
+		{
+			usleep(wait);
+			first = 1;
+		}
+		else
+			usleep(100);
 	}
 }

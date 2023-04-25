@@ -1,7 +1,7 @@
 #---------------------------------------------------#
 CC 			= cc
 
-CFLAGS 		= -Wall -Wextra -Werror -O2 -g3 #-fsanitize=thread -g3
+CFLAGS 		= -Wall -Wextra -Werror
 NAME 		= philo
 #---------------------------------------------------#
 OBJ_DIR 	= obj/
@@ -13,7 +13,7 @@ game.c\
 init.c\
 utils.c\
 control_death.c\
-swap_fork.c
+fork.c
 
 
 OBJ_DIR 	= .obj

@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:52 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/14 11:20:11 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/24 15:09:02 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int	init_mutex(t_data *game)
 
 	i = game->nb_philo - 1;
 	game->forks = malloc(sizeof(pthread_mutex_t) * game->nb_philo);
-	game->waiting_list = malloc(sizeof(pthread_mutex_t) * game->nb_philo);
+	game->is_used = malloc(sizeof(int) * game->nb_philo);
 	if (!game->forks)
 		return (1);
+	if (!game->is_used)
+		return (7);
 	while (i >= 0)
 	{
 		if (pthread_mutex_init(&(game->forks[i]), NULL))
 			return (2);
+		game->is_used[i] = 0;
 		i--;
 	}
 	if (pthread_mutex_init(&(game->writing), NULL))

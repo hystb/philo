@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:22 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/12 14:13:26 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/24 14:21:14 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	control_death(t_data *game, int i)
 
 	while (1)
 	{
-		usleep(100);
+		usleep(1000);
 		nb_eat_succes = game->nb_time_eat == 0;
 		lock_philo(game, 0);
 		i = 0;

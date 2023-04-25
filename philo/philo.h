@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:41 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/14 12:40:05 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/24 15:01:14 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_data
 	int				nb_time_eat;
 	long			first_time;
 	pthread_mutex_t	*forks;
+	int				*is_used;
 	pthread_mutex_t	*waiting_list;
 	pthread_mutex_t	writing;
 	t_philo			*philo;
@@ -76,5 +77,9 @@ void	control_death(t_data *game, int i);
 int		error_alloc(t_data *game, int error, int i);
 int		error_mutex(t_data *game, int error, int i);
 void	swap_fork(t_philo *philo);
+void	nxt_step(int **usd, pthread_mutex_t **fork, t_philo *phi, t_data *game);
+void	count_eating(t_philo *philo);
+void	take_fork(int *used, int *taken, t_philo *phi, t_data *game);
+void	give_fork(int **usd, pthread_mutex_t **frk, t_philo *phi, t_data *game);
 
 #endif

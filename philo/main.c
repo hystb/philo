@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:14:02 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/10 12:14:05 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/24 13:50:54 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	clear_data(t_data game, int i)
 	pthread_mutex_destroy(&game.writing);
 	free(game.philo);
 	free(game.forks);
+	free(game.is_used);
 }
 
 static void	print_fd(char *s1, char *s2, char *s3)
