@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:44 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/24 15:02:18 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/25 11:50:24 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	philo_eat(t_philo *phi, pthread_mutex_t **fork, t_data *game, int **used)
 		}
 		else
 			return (1);
+		usleep(200);
 	}
 	nxt_step(used, fork, phi, game);
 	return (1);

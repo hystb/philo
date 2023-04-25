@@ -6,7 +6,7 @@
 /*   By: nmilan <nmilan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 12:13:22 by nmilan            #+#    #+#             */
-/*   Updated: 2023/04/24 14:21:14 by nmilan           ###   ########.fr       */
+/*   Updated: 2023/04/25 11:52:35 by nmilan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	death_checker(int i, long time, t_data *game)
 	{
 		while (++j < game->nb_philo)
 			game->philo[j].death = 1;
-		usleep(100);
+		usleep(1000);
 		print_philo(game->philo[i].id, DIE, game, 1);
 		return (1);
 	}
