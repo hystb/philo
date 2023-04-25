@@ -1,7 +1,7 @@
 #---------------------------------------------------#
 CC 			= cc
 
-CFLAGS 		= -Wall -Wextra -Werror -O2
+CFLAGS 		= -Wall -Wextra -Werror
 NAME 		= philo
 #---------------------------------------------------#
 OBJ_DIR 	= obj/
